@@ -33,18 +33,4 @@ The workflow supports two distinct therapeutic modalities based on immediate nee
 ### 3. Context-Aware Personas
 To ensure robustness, the system loads detailed JSON patient profiles (e.g., "Alice - Generalized Anxiety", "Bob - Depression"). The agents respect specific boundaries (e.g., "Do not discuss past trauma") and tailor questions to the patient's specific context.
 
----
 
-## 🛠️ Technical Implementation
-
-### State Management
-The system maintains a strictly typed state (`CaiTIState`) that persists across the graph, ensuring all agents share context.
-
-```python
-class CaiTIState(TypedDict):
-    messages: Annotated[List[BaseMessage], operator.add]
-    current_dimension: str            # Current topic (e.g., "sleep_schedule")
-    dimension_scores: Dict[str, int]  # Real-time Risk Map
-    phase: Literal["screening", "cbt", "done"]
-    cbt_stage: Literal["identify", "challenge", "reframe"]
-    patient_context: str              # Static profile constraints
